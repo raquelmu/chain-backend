@@ -49,9 +49,16 @@ Authentication: - verify current user and private routes
 
 ### Endpoints
 
-| Method | Path         | description     | Body |
-| :----: | ------------ | --------------- | ---- |
-|  GET   | `/protected` | protected route |      |
+| Method  | Path         | description     | Body |
+| :----:  | ------------ | --------------- | ---- |
+|  GET    | `/protected` | protected route |      |
+|  GET    | `/ads     `  | list all ads    |      |
+|  POST   | `/ads`       | create an ad    |      |
+|  GET    | `/ads/:id`   | get an ad       |      |
+|  PUT    | `/ads/:id`   | update an ad    |      |
+|  DELETE | `/ads/:id`   | delete an ad    |      |
+
+
 
 ### Auth
 
