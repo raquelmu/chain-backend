@@ -57,7 +57,10 @@ Authentication: - verify current user and private routes
 |  GET    | `/ads/:id`   | get an ad       |      |
 |  PUT    | `/ads/:id`   | update an ad    |      |
 |  DELETE | `/ads/:id`   | delete an ad    |      |
-
+|  GET    | `/user/:id`	 | get a profile   |      |
+|  POST   | `/user`      | create a profile|      |
+|  PUT    | `/user/:id`  | update a profile|      |
+|  DELETE | `/user/:id`  | delete a profile|      |
 
 
 ### Auth
@@ -75,8 +78,11 @@ User model
 
 ```javascript
 {
-	username: String;
-	password: String;
+	username: String
+	password: String
+	age: Number
+	description: String
+	city: String
 }
 ```
 
