@@ -14,29 +14,7 @@ It is a collaborative website where you can announce the exchange of objects or 
 
 ## Motivation
 
-Consolidate React with your own project where you can put its functionality into practice (components and Backend-Frontend connection)
-
-## User Stories
-
-**404** - As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault
-
-**500** - As a user I want to see a nice error page when the super team screws it up so that I know that is not my fault
-
-**Homepage** - As a user I want to be able to access the homepage so that I see what the website is about and login and signup
-
-**Sign up** - As a user I want to sign up on the webpage so that I can see all the advertisements
-
-**Login** - As a user I want to be able to log in on the webpage so that I can get back to my account
-
-**Logout** - As a user I want to be able to log out from the webpage so that I can make sure no one will access my account
-
-**Advertisements list** - As a user I want to see all the advertisements available so that I can choose which ones I want to exchange
-
-**Advertisements CRUD** - As a user I want to create, update and delete an advertisement
-
-**Advertisement detail** - As a user I want to see the advertisements details
-
-**Accept exchanges** - As a user I want to be able to accept a offer
+Being able to facilitate the exchange of favors or services in a time of economic crisis and also encourage solidarity.
 
 ## Backlog
 
@@ -49,15 +27,18 @@ Authentication: - verify current user and private routes
 
 ### Endpoints
 
-| Method  | Path         | description     | Body |
-| :----:  | ------------ | --------------- | ---- |
-|  GET    | `/protected` | protected route |      |
-|  GET    | `/ads     `  | list all ads    |      |
-|  POST   | `/ads`       | create an ad    |      |
-|  GET    | `/ads/:id`   | get an ad       |      |
-|  PUT    | `/ads/:id`   | update an ad    |      |
-|  DELETE | `/ads/:id`   | delete an ad    |      |
-
+| Method  | Path          | description     | Body |
+| :----:  | ------------  | --------------- | ---- |
+|  GET    | `/ads     `   | list all ads    |      |
+|  POST   | `/ads/new`    | create an ad    |      |
+|  GET    | `/ads/:id`    | get an ad       |      |
+|  PUT    | `/ads/:id`    | update an ad    |      |
+|  DELETE | `/ads/:id`    | delete an ad    |      |
+|  GET    | `/profile `   | my profile      |      |
+|  PUT    | `/profile `   | update profile  |      |
+|  DELETE | `/profile `   | delete profile  |      |
+|  GET    | `/profile/:id`| other profile   |      |
+|  GET    | `/favs     `  | list all favs   |      |
 
 
 ### Auth
@@ -75,8 +56,15 @@ User model
 
 ```javascript
 {
-	username: String;
-	password: String;
+	username: String,
+	password: String,
+	name: String,
+	profile_image: String,
+	about: String,
+	location: String,
+	points: Number,
+	review: Number (1-5),	
+	favs: Array,
 }
 ```
 
@@ -85,10 +73,18 @@ Advertisement model
 ```javascript
 {
 	owner: ObjectId<User>
+	image: String,
 	name: String
 	description: String
+	contact: { 
+		phone: Number,
+		email: String,
+	}
 	date: Date
 	location: String
+	tags: Array,
+	points: Number
+	
 }
 ```
 
