@@ -26,6 +26,8 @@ mongoose
 
 const authRouter = require('./routes/auth');
 const demoRouter = require('./routes/demo');
+const adsRouter = require('./routes/ads');
+
 
 const app = express();
 
@@ -57,7 +59,7 @@ app.use(
 );
 
 app.use('/', authRouter);
-app.use('/protected', demoRouter);
+app.use('/ads', adsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
