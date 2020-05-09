@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const adSchema = new Schema({
-	name:String,
+	name: String,
 });
 
 const Ad = mongoose.model('Ad', adSchema);

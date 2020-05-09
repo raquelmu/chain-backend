@@ -9,7 +9,8 @@ const router = express.Router();
 // router.use(middleware.checkIfUserLoggedIn);
 
 /* GET /ad list*/
-router.get('/', (req, res, next) => {
+router.get('/all', (req, res, next) => {
+	console.log('request from postman')
 	Ad.find()
 		.then(ads => {
 			res.status(200).json(ads);
@@ -18,7 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 // POST /ads create
-router.post('/', (req, res, next) => {
+router.post('/new', (req, res, next) => {
 	const { name } = req.body;
 	Ad.create({
 		name
@@ -28,8 +29,27 @@ router.post('/', (req, res, next) => {
 		})
 		.catch(next);
 });
+// GET /ads/:id single ad
 
-// POST /ad/:id delete
+
+
+router.get('/:id', async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		const singleAd = await Ad.findById(id)
+		if (singleAd) {
+			return res.json(singleAd);    
+		} else { 
+			return res.json({error: "No se ha podido encontrar el Ad"})
+		}
+	} catch(error){
+		next(error)
+	}
+});
+
+
+
+// POST /ads/:id delete
 router.delete('/:id', (req, res, next) => {
 	const { id } = req.params;
 
@@ -41,20 +61,19 @@ router.delete('/:id', (req, res, next) => {
 });
 
 // POST /ad/:id update
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
 	const { name } = req.body;
-	Ad.findByIdAndUpdate(id, {
-		name
-	})
-		.then(adUpdated => {
-			if (adUpdated) {
-				res.json(adUpdated);
+	try {
+		const adUpdated = await Ad.findByIdAndUpdate(id, { name })
+		if (adUpdated) {
+			return res.json(adUpdated);
 			} else {
-				res.status(404).json('not found');
+				return res.json('not updated');
 			}
-		})
-		.catch(next);
+		}catch(error){
+			next(error)
+		}
 });
 
 // POST /resorts/:id/review
