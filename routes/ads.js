@@ -20,9 +20,15 @@ router.get('/all', (req, res, next) => {
 
 // POST /ads create
 router.post('/new', (req, res, next) => {
-	const { name } = req.body;
+	const { name, userId, description, date, location, phone, email } = req.body;
 	Ad.create({
-		name
+		name,
+		userId,
+		description, 
+		date, 
+		location, 
+		phone, 
+		email,
 	})
 		.then(ad => {
 			res.json(ad);
@@ -63,9 +69,18 @@ router.delete('/:id', (req, res, next) => {
 // POST /ad/:id update
 router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
-	const { name } = req.body;
+	const {  name, userId, description, date, location, phone, email } = req.body;
 	try {
-		const adUpdated = await Ad.findByIdAndUpdate(id, { name })
+		const adUpdated = await Ad.findByIdAndUpdate(id, { 
+			name,
+			userId,
+			description, 
+			date, 
+			location, 
+			phone, 
+			email, }
+			)
+
 		if (adUpdated) {
 			return res.json(adUpdated);
 			} else {
@@ -75,20 +90,5 @@ router.put('/:id', async (req, res, next) => {
 			next(error)
 		}
 });
-
-// POST /resorts/:id/review
-// router.post('/:id/review', (req, res, next) => {
-// 	const { id } = req.params;
-// 	const { author, text } = req.body;
-// 	Review.create({
-// 		resort_id: id,
-// 		author,
-// 		text,
-// 	})
-// 		.then(() => {
-// 			res.redirect(`/resorts/${id}/update`);
-// 		})
-// 		.catch(next);
-// });
 
 module.exports = router;

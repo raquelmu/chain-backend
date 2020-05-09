@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const { checkUsernameAndPasswordNotEmpty, checkIfLoggedIn } = require('../middlewares');
 const User = require('../models/User');
+
 const bcryptSalt = 10;
 const router = express.Router();
 
@@ -110,6 +111,7 @@ router.get('/:id/logout', (req, res, next) => {
 		return res.status(204).send();
 	});
 });
+
 
 
 

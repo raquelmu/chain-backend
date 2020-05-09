@@ -8,12 +8,21 @@ const userSchema = new Schema(
 		hashedPassword: { type: String, required: true },
 	},
 	{
+		name: String,
+		profile_image: String,
+		about: String,
+		location: String,
+		points: Number,
+		favs: Array,
+	},
+	{
 		timestamps: {
 			createdAt: 'created_at',
 			updatedAt: 'updated_at',
 		},
 	}
 );
+
 
 const User = mongoose.model('User', userSchema);
 
