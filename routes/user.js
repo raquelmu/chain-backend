@@ -18,3 +18,22 @@ router.post('/rating', async (req, res, next) => {
 });
 
 //findbyid review de id (login)
+
+
+// GET /:id - find id para guardar number?
+
+    // router.get('/rating', async (req, res, next) => {
+    //  const { id } = req.params;
+    //  const { number } = req.body;
+    //  try {
+    //      const rate = await Review.findById(id);
+    //      if (rate) {
+    //          // .push
+    //          return res.json(rate)
+    //      } else {
+    //          return res.json({error: "No se ha podido encontrar el review"})
+    //      }
+    //  } catch(error){
+    //      next(error)
+    //  }
+    // });
