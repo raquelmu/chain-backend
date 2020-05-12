@@ -1,4 +1,8 @@
+const express = require('express');
 const Review = require('../models/Review');
+const User = require('../models/User');
+const router = express.Router();
+
 
 // //POST /:id - Puntuar user
 
@@ -19,21 +23,48 @@ router.post('/rating', async (req, res, next) => {
 
 //findbyid review de id (login)
 
+// codigo gisela
 
-// GET /:id - find id para guardar number?
+//GET - PARA OBTENER TODOS LOS FAVORITOS
+router.get('/favorites/all', async (req, res, next) => {
+	const { currentUser } = req.session;
+	try {
+		if (currentUser) {
+			const { favorites } = await User.findById( currentUser._id )
+			return res.status(200).json(favoritess);
+		} else {
+			return res.status(401).json( { error: " No hay usuario en la sesión" });
+		}
+	} catch(error) {
+		next(error)
+	}
+});
 
-    // router.get('/rating', async (req, res, next) => {
-    //  const { id } = req.params;
-    //  const { number } = req.body;
-    //  try {
-    //      const rate = await Review.findById(id);
-    //      if (rate) {
-    //          // .push
-    //          return res.json(rate)
-    //      } else {
-    //          return res.json({error: "No se ha podido encontrar el review"})
-    //      }
-    //  } catch(error){
-    //      next(error)
-    //  }
-    // });
+//POST /favorites/:id' - AÑADIR UN FAVORITO A LA LISTA DE FAVS DEL USER
+router.post('/favorites/add', async (req, res, next) => {
+	const { currentUser } = req.session;
+	const { adsId } = req.body;
+	try{ 
+		const userFav = await User.findByIdAndUpdate( currentUser._id, { $push: { favorites: adsId }  }, { new: true })
+		return res.status(200).json(userFav)
+	}catch(error){
+		next(error)
+	}
+});
+
+
+//POST REMOVE
+router.post('/favorites/remove', async (req, res, next) => {
+	const { currentUser } = req.session;
+	const { adsId } = req.body;
+		try{
+			const userFav = await User.findByIdAndUpdate( currentUser._id, { $pull: {favorites: adsId} }, {new: true} )
+			return res.status(200).json(userFav)
+		}catch(error){
+			next(error)
+		}
+});
+
+
+
+module.exports = router;

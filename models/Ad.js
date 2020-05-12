@@ -32,6 +32,7 @@ const adSchema = new Schema({
 		type: String,
 		required: true
 	},
+	
 	// tags: {
 	// 	type: Array,
 	// },
