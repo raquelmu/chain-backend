@@ -5,15 +5,20 @@ const { Schema } = mongoose;
 const userSchema = new Schema(
 	{
 		username: { type: String, required: true, unique: true },
-		hashedPassword: { type: String, required: true },
-	},
-	{
-		name: String,
-		profile_image: String,
-		about: String,
-		location: String,
-		points: Number,
-		favs: Array,
+		hashedPassword: {type: String, required: true },
+	
+	
+		name:  {type: String},
+		profile_image:  {type: String},
+		about:  {type: String},
+		location:  {type: String},
+		points: { type: Number},
+		favorites: [
+			{
+            	type: Schema.Types.ObjectId,
+            	ref: 'Ad'
+        	}
+		],
 	},
 	{
 		timestamps: {
