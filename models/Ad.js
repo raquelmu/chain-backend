@@ -38,6 +38,10 @@ const adSchema = new Schema({
 		ref: 'User'
 		}
 	],
+	selected: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	},
 	// tags: {
 	// 	type: Array,
 	// },

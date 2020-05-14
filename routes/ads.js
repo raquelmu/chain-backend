@@ -80,6 +80,20 @@ router.post('/join/remove', async (req, res, next) => {
 		next(error)
 	}
 });
+
+//POST  /select - pasar el id del usuario del joined a selected
+
+router.post('/select', async (req, res, next) => {
+	const { idAd, idUserJoined } = req.body;
+	try{
+		const selectedUser = await Ad.findByIdAndUpdate( idAd, {selected: idUserJoined}, { new: true })
+		return res.status(200).json(selectedUser)
+	}catch(error){
+		next(error)
+	}
+});	
+
+
 // POST /ads/:id delete
 router.delete('/:id', (req, res, next) => {
 	const { id } = req.params;
