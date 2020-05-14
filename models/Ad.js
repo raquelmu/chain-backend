@@ -32,7 +32,12 @@ const adSchema = new Schema({
 		type: String,
 		required: true
 	},
-	
+	joined: [
+		{
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+		}
+	],
 	// tags: {
 	// 	type: Array,
 	// },

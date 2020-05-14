@@ -55,8 +55,31 @@ router.get('/:id', async (req, res, next) => {
 
 
 
+//POST /join/add' - AÑADIR UN JOIN DE UN AD
 
+router.post('/join/add', async (req, res, next) => {
+	const { currentUser } = req.session;
+	const { idAd } = req.body;
+	try{ 
+		const joinAd = await Ad.findByIdAndUpdate( idAd, { $push: { joined: currentUser._id }  }, { new: true })
+		return res.status(200).json(joinAd)
+	}catch(error){
+		next(error)
+	}
+});
 
+//POST /join/add' - eliminar un join de un ad
+
+router.post('/join/remove', async (req, res, next) => {
+	const { currentUser } = req.session;
+	const { idAd } = req.body;
+	try{ 
+		const joinAd = await Ad.findByIdAndUpdate( idAd, { $pull: { joined: currentUser._id }  }, { new: true })
+		return res.status(200).json(joinAd)
+	}catch(error){
+		next(error)
+	}
+});
 // POST /ads/:id delete
 router.delete('/:id', (req, res, next) => {
 	const { id } = req.params;
@@ -68,7 +91,7 @@ router.delete('/:id', (req, res, next) => {
 		.catch(next);
 });
 
-// POST /ad/:id update
+// POST /ads/:id update
 router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
 	const {  name, userId, description, date, location, phone, email } = req.body;
