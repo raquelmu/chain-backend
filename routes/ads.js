@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 const express = require('express');
 const Ad = require('../models/Ad');
+const User = require('../models/User');
+
 // const Review = require('../models/Review');
 // const middleware = require('../helpers/authMiddleware');
 
@@ -20,23 +22,23 @@ router.get('/all', (req, res, next) => {
 
 // POST /ads create
 router.post('/new', (req, res, next) => {
-	const { _id } = req.session.currentUser;
-	console.log(currentUser)
-	// const { name, description, date, location, phone, email, status } = req.body;
-	// Ad.create({
-	// 	name,
-	// 	userId,
-	// 	description, 
-	// 	date, 
-	// 	location, 
-	// 	phone, 
-	// 	email,
-	// 	status,
-	// })
-	// 	.then(ad => {
-	// 		res.json(ad);
-	// 	})
-	// 	.catch(next);
+	const { currentUser: userId } = req.session;
+	const { name, description, price, date, location, phone, email, status } = req.body;
+	Ad.create({
+		name,
+		userId,
+		description, 
+		date, 
+		location, 
+		phone, 
+		email,
+		status,
+		price
+	})
+		.then(ad => {
+			res.json(ad);
+		})
+		.catch(next);
 });
 // GET /ads/:id single ad
 
@@ -64,6 +66,7 @@ router.post('/join/add', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd } = req.body;
 	try{ 
+		//if !selected findid and update si es true 200, sino error
 		const joinAd = await Ad.findByIdAndUpdate( idAd, { $push: { joined: currentUser._id }  }, { new: true })
 		return res.status(200).json(joinAd)
 	}catch(error){
@@ -71,7 +74,7 @@ router.post('/join/add', async (req, res, next) => {
 	}
 });
 
-//POST /join/add' - eliminar un join de un ad
+//POST /join/remove' - eliminar un join de un ad
 
 router.post('/join/remove', async (req, res, next) => {
 	const { currentUser } = req.session;
@@ -96,6 +99,42 @@ router.post('/select', async (req, res, next) => {
 	}
 });
 
+
+
+//POST /completed - pasar puntos cuando se cambie estado a completed
+
+
+router.post('/completed', async (req, res, next) => {
+	const { idAd } = req.body;
+	try{
+		const ad = await Ad.findByIdAndUpdate( idAd, {status: "completed"}, { new: true })
+		// Aqui coger el user selected
+		// Despues hacer una consulta de cuantos puntos tiene
+		// sumarle 5 a los puntos que tenga y guardarlo en una variable
+		// actualizar el perfil fel usuario con esa variable
+		const userSelectedId = ad.selected;
+		const userOwnerId = ad.userId
+		const userProfile = await User.findById(userSelectedId)
+		const userOwner = await User.findById(userOwnerId)
+		let addPoints = userProfile.points + 5
+		let subPoints = userOwner.points - 5
+
+		 if (ad.status === "completed") {			
+			const userResponse = await User.findById(userSelectedId)
+			await User.findByIdAndUpdate(ad.selected, {points: addPoints} )
+			console.log(userResponse, "puntos sumados")
+			const ownerResponse = await User.findById(userOwnerId)
+			await User.findByIdAndUpdate(ad.userId, { points: subPoints } )
+			console.log(ownerResponse, "puntos restados")
+
+			return res.status(200).json(ad)
+		 } else {
+		 	return res.json({error: "No se ha podido sumar puntos"})
+		 }
+	}catch(error){
+		next(error)
+	}
+});
 
 
 

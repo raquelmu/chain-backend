@@ -12,7 +12,7 @@ const userSchema = new Schema(
 		profile_image:  {type: String},
 		about:  {type: String},
 		location:  {type: String},
-		points: { type: Number},
+		points: { type: Number, default: 10},
 		favorites: [
 			{
             	type: Schema.Types.ObjectId,
