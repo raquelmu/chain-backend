@@ -11,9 +11,9 @@ const adSchema = new Schema({
 		type: Schema.Types.ObjectId, 
 		ref:"User"
 	},
-	// image: {
-	// 	type: String,
-	// },
+	image: {
+		type: String,
+	},
 	description: {
 		type: String,
 		required: true
@@ -48,9 +48,12 @@ const adSchema = new Schema({
 		default: "available"
 	},
 
-	// tags: {
-	// 	type: Array,
+	// categories: {
+	// 	type: String, 
+	// 	enum:["available", "in_progress", "completed"],
+	// 	default: "available"
 	// },
+	
 	price: {
 		type: Number,
 		default: 5

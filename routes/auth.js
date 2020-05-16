@@ -6,7 +6,7 @@ const User = require('../models/User');
 const bcryptSalt = 10;
 const router = express.Router();
 
-// GET /:id anyProfile
+//GET /:id See any profile
 router.get('/:id', async (req, res, next) => {
 	const { id } = req.params;
 	try {
@@ -21,8 +21,7 @@ router.get('/:id', async (req, res, next) => {
 	}
 });
 
-// PUT /:id - Editar perfil del usuario
-
+//PUT /:id Edit user's info
 router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { username } = req.body;	
@@ -38,11 +37,9 @@ router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
 		}
 });
 
-// DELETE /:id - Eliminar cuenta
-
+//DELETE /:id Delete user
 router.delete('/:id', (req, res, next) => {
 	const { id } = req.params;
-
 	User.findByIdAndDelete(id)
 		.then(user => {
 			res.json(user);
@@ -50,10 +47,8 @@ router.delete('/:id', (req, res, next) => {
 		.catch(next);
 });
 
-// --- AUTENTICACIÓN ---
-
-//GET /whoami - comprueba el current user
-
+//AUTH
+//GET /whoami Check current user in session
 router.get('/whoami', (req, res, next) => {
 	if (req.session.currentUser) {
 		res.status(200).json(req.session.currentUser);
@@ -62,8 +57,7 @@ router.get('/whoami', (req, res, next) => {
 	}
 });
 
-//POST /signup Crear un usuario
-
+//POST /signup New user
 router.post('/signup', checkUsernameAndPasswordNotEmpty, async (req, res, next) => {
 	const { username, password } = res.locals.auth;
 	try {
@@ -82,8 +76,7 @@ router.post('/signup', checkUsernameAndPasswordNotEmpty, async (req, res, next) 
 	}
 });
 
-// POST /login - buscar usuario creado en DB
-
+//POST /login Search user in DB
 router.post('/login', checkUsernameAndPasswordNotEmpty, async (req, res, next) => {
 	const { username, password } = res.locals.auth;
 	try {
@@ -101,10 +94,8 @@ router.post('/login', checkUsernameAndPasswordNotEmpty, async (req, res, next) =
 		next(error);
 	}
 });
-//GET /logout Destruir sesion actual
-
-router.get('/:id/logout', (req, res, next) => {
-	//const { id } = req.params;
+//GET /logout Destroy session
+router.get('/logout', (req, res, next) => {
 	req.session.destroy(err => {
 		if (err) {
 			next(err);
@@ -112,8 +103,5 @@ router.get('/:id/logout', (req, res, next) => {
 		return res.status(204).send();
 	});
 });
-
-
-
 
 module.exports = router;

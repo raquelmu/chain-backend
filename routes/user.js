@@ -3,10 +3,7 @@ const Review = require('../models/Review');
 const User = require('../models/User');
 const router = express.Router();
 
-
-// //POST /:id - Puntuar user
-
-
+//POST /:id 
 router.post('/:id/rating', async (req, res, next) => {
 	const { number, ratingUser } = req.body;
 	const ratedUser = req.params.id;
