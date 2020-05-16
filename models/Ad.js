@@ -42,13 +42,21 @@ const adSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	status: {
+		type: String, 
+		enum:["available", "in_progress", "completed"],
+		default: "available"
+	},
+
+	// 	enum: disponible (default), en proceso (selected), finalizado (sumar puntos)
+	// },
+
 	// tags: {
 	// 	type: Array,
 	// },
 	// points: {
 	// 	type: Number,
 	// },
-	// status: {}
 });
 
 const Ad = mongoose.model('Ad', adSchema);

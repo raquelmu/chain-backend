@@ -20,20 +20,23 @@ router.get('/all', (req, res, next) => {
 
 // POST /ads create
 router.post('/new', (req, res, next) => {
-	const { name, userId, description, date, location, phone, email } = req.body;
-	Ad.create({
-		name,
-		userId,
-		description, 
-		date, 
-		location, 
-		phone, 
-		email,
-	})
-		.then(ad => {
-			res.json(ad);
-		})
-		.catch(next);
+	const { _id } = req.session.currentUser;
+	console.log(currentUser)
+	// const { name, description, date, location, phone, email, status } = req.body;
+	// Ad.create({
+	// 	name,
+	// 	userId,
+	// 	description, 
+	// 	date, 
+	// 	location, 
+	// 	phone, 
+	// 	email,
+	// 	status,
+	// })
+	// 	.then(ad => {
+	// 		res.json(ad);
+	// 	})
+	// 	.catch(next);
 });
 // GET /ads/:id single ad
 
@@ -86,12 +89,14 @@ router.post('/join/remove', async (req, res, next) => {
 router.post('/select', async (req, res, next) => {
 	const { idAd, idUserJoined } = req.body;
 	try{
-		const selectedUser = await Ad.findByIdAndUpdate( idAd, {selected: idUserJoined}, { new: true })
+		const selectedUser = await Ad.findByIdAndUpdate( idAd, {selected: idUserJoined, status: "in_progress"}, { new: true })
 		return res.status(200).json(selectedUser)
 	}catch(error){
 		next(error)
 	}
-});	
+});
+
+
 
 
 // POST /ads/:id delete
