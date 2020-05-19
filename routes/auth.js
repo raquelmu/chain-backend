@@ -6,50 +6,10 @@ const User = require('../models/User');
 const bcryptSalt = 10;
 const router = express.Router();
 
-//GET /:id See any profile
-router.get('/:id', async (req, res, next) => {
-	const { id } = req.params;
-	try {
-		const anyProfile = await User.findById(id)
-		if (anyProfile) {
-			return res.json(anyProfile)
-		} else { 
-			return res.json({error: "No se ha podido encontrar el Profile"})
-		}
-	} catch(error){
-		next(error)
-	}
-});
-
-//PUT /:id Edit user's info
-router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
-	const { id } = req.params;
-	const { username } = req.body;	
-	try {
-		const profileUpdated = await User.findByIdAndUpdate (id, { username }, {new: true}) 
-		if (profileUpdated){
-			return res.json(profileUpdated);
-			} else {
-				return res.json('not updated');
-			}
-		}catch(error){
-			next(error)
-		}
-});
-
-//DELETE /:id Delete user
-router.delete('/:id', (req, res, next) => {
-	const { id } = req.params;
-	User.findByIdAndDelete(id)
-		.then(user => {
-			res.json(user);
-		})
-		.catch(next);
-});
-
 //AUTH
 //GET /whoami Check current user in session
 router.get('/whoami', (req, res, next) => {
+	console.log(req.session.currentUser, "WHOAIM")
 	if (req.session.currentUser) {
 		res.status(200).json(req.session.currentUser);
 	} else {
@@ -94,6 +54,7 @@ router.post('/login', checkUsernameAndPasswordNotEmpty, async (req, res, next) =
 		next(error);
 	}
 });
+
 //GET /logout Destroy session
 router.get('/logout', (req, res, next) => {
 	req.session.destroy(err => {
@@ -103,5 +64,47 @@ router.get('/logout', (req, res, next) => {
 		return res.status(204).send();
 	});
 });
+
+//GET /:id See any profile
+router.get('/:id', async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		const anyProfile = await User.findById(id)
+		if (anyProfile) {
+			return res.json(anyProfile)
+		} else { 
+			return res.json({error: "No se ha podido encontrar el Profile"})
+		}
+	} catch(error){
+		next(error)
+	}
+});
+
+//PUT /:id Edit user's info
+router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
+	const { id } = req.params;
+	const { username, name, profile_image,  } = req.body;	
+	try {
+		const profileUpdated = await User.findByIdAndUpdate (id, { username }, {new: true}) 
+		if (profileUpdated){
+			return res.json(profileUpdated);
+			} else {
+				return res.json('not updated');
+			}
+		}catch(error){
+			next(error)
+		}
+});
+
+//DELETE /:id Delete user
+router.delete('/:id', (req, res, next) => {
+	const { id } = req.params;
+	User.findByIdAndDelete(id)
+		.then(user => {
+			res.json(user);
+		})
+		.catch(next);
+});
+
 
 module.exports = router;

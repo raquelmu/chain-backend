@@ -19,9 +19,10 @@ router.get('/all', async (req, res, next) => {
 
 // POST ads/new Create an ad
 router.post('/new', async (req, res, next) => {
-	const { currentUser: userId } = req.session;
-	const { name, description, price, date, location, phone, email, status } = req.body;
-	try{
+	const { points, userId } = req.session.currentUser;
+	const { name, description, price, date, location, phone, email, status, image } = req.body;
+	try{	
+		if (points >= 5) {  
 		const newAd = await Ad.create({
 			name,
 			userId,
@@ -31,9 +32,13 @@ router.post('/new', async (req, res, next) => {
 			phone, 
 			email,
 			status,
-			price
+			price,
+			image
 		})
 		return res.json(newAd);
+	} else{
+		return res.json({error: "No tienes suficientes puntos"})
+	}
 	} catch(error){
 		next(error)
 	}
@@ -57,13 +62,14 @@ router.get('/:id', async (req, res, next) => {
 //POST /ads/join/add Join an ad
 router.post('/join/add', async (req, res, next) => {
 	const { currentUser } = req.session;
-	const { idAd } = req.body;
-
+	const { idAd, selected } = req.body;
 	try{ 
-		//if !selected findid and update si es true 200, sino error
+		if (selected === true) {
 		const joinAd = await Ad.findByIdAndUpdate( idAd, { $push: { joined: currentUser._id }  }, { new: true })
-
 		return res.status(200).json(joinAd)
+		} else {
+			return res.json({error: "Ya hay alguien seleccionado, no puedes hacer join"})
+		}
 	} catch(error){
 		next(error)
 	}
@@ -139,7 +145,7 @@ router.delete('/:id', async (req, res, next) => {
 // POST /ads/:id Update ad
 router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
-	const {  name, userId, description, status, price, date, location, phone, email } = req.body;
+	const {  name, userId, description, status, price, date, location, phone, email, image } = req.body;
 	try {
 		const adUpdated = await Ad.findByIdAndUpdate(id, { 
 			name,
@@ -150,7 +156,9 @@ router.put('/:id', async (req, res, next) => {
 			phone, 
 			status, 
 			price,
-			email, }
+			email,
+			image 
+		}
 			)
 
 		if (adUpdated) {

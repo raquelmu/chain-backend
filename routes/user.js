@@ -32,8 +32,6 @@ router.get('/:id/rating', async (req, res, next) => {
     }
 });
 
-
-
 //GET /favorites/all See all favorites
 router.get('/favorites/all', async (req, res, next) => {
 	const { currentUser } = req.session;
