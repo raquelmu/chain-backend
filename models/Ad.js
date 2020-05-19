@@ -47,13 +47,6 @@ const adSchema = new Schema({
 		enum:["available", "in_progress", "completed"],
 		default: "available"
 	},
-
-	// categories: {
-	// 	type: String, 
-	// 	enum:["available", "in_progress", "completed"],
-	// 	default: "available"
-	// },
-	
 	price: {
 		type: Number,
 		default: 5

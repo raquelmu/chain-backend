@@ -145,17 +145,14 @@ router.delete('/:id', async (req, res, next) => {
 // POST /ads/:id Update ad
 router.put('/:id', async (req, res, next) => {
 	const { id } = req.params;
-	const {  name, userId, description, status, price, date, location, phone, email, image } = req.body;
+	const {  name, description, date, location, phone, email, image } = req.body;
 	try {
 		const adUpdated = await Ad.findByIdAndUpdate(id, { 
 			name,
-			userId,
 			description, 
 			date, 
 			location, 
 			phone, 
-			status, 
-			price,
 			email,
 			image 
 		}

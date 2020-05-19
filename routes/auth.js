@@ -83,9 +83,9 @@ router.get('/:id', async (req, res, next) => {
 //PUT /:id Edit user's info
 router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
-	const { username, name, profile_image,  } = req.body;	
+	const { name, profile_image, about, location } = req.body;	
 	try {
-		const profileUpdated = await User.findByIdAndUpdate (id, { username }, {new: true}) 
+		const profileUpdated = await User.findByIdAndUpdate (id, { name, profile_image, about, location }, {new: true}) 
 		if (profileUpdated){
 			return res.json(profileUpdated);
 			} else {
