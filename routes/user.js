@@ -3,7 +3,7 @@ const Review = require('../models/Review');
 const User = require('../models/User');
 const router = express.Router();
 
-//POST /:id 
+//POST /:id/rating  New review
 router.post('/:id/rating', async (req, res, next) => {
 	const { number, ratingUser } = req.body;
 	const ratedUser = req.params.id;
@@ -20,11 +20,7 @@ router.post('/:id/rating', async (req, res, next) => {
 	}
 });
 
-//findbyid review de id (login)
-
-
-//GET /rating - buscar todas las puntuaciones de un usurio (por el Id del usuario)
-
+//GET /:id/rating Search all review (by user Id)
 router.get('/:id/rating', async (req, res, next) => {
 	const userId = req.params.id;
 	console.log(userId)
@@ -38,7 +34,7 @@ router.get('/:id/rating', async (req, res, next) => {
 
 
 
-//GET - PARA OBTENER TODOS LOS FAVORITOS
+//GET /favorites/all See all favorites
 router.get('/favorites/all', async (req, res, next) => {
 	const { currentUser } = req.session;
 	try {
@@ -53,7 +49,7 @@ router.get('/favorites/all', async (req, res, next) => {
 	}
 });
 
-//POST /favorites/:id' - AÑADIR UN FAVORITO A LA LISTA DE FAVS DEL USER
+//POST /favorites/add Save a favorite
 router.post('/favorites/add', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { adsId } = req.body;
@@ -65,8 +61,7 @@ router.post('/favorites/add', async (req, res, next) => {
 	}
 });
 
-
-//POST REMOVE
+//POST /favorites/remove Delete a favorite
 router.post('/favorites/remove', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { adsId } = req.body;
@@ -77,7 +72,5 @@ router.post('/favorites/remove', async (req, res, next) => {
 			next(error)
 		}
 });
-
-
 
 module.exports = router;
