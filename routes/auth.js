@@ -9,7 +9,6 @@ const router = express.Router();
 //AUTH
 //GET /whoami Check current user in session
 router.get('/whoami', (req, res, next) => {
-	console.log(req.session.currentUser, "WHOAIM")
 	if (req.session.currentUser) {
 		res.status(200).json(req.session.currentUser);
 	} else {
