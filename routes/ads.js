@@ -5,7 +5,7 @@ const User = require('../models/User');
 // const middleware = require('../helpers/authMiddleware');
 
 const router = express.Router();
-router.use(middleware.checkIfUserLoggedIn);
+// router.use(middleware.checkIfUserLoggedIn);
 
 // GET ads/all List all ads
 router.get('/all', async (req, res, next) => {
