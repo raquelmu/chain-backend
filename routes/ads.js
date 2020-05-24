@@ -19,13 +19,14 @@ router.get('/all', async (req, res, next) => {
 
 // POST ads/new Create an ad
 router.post('/new', async (req, res, next) => {
-	const { points, userId } = req.session.currentUser;
+	const { points, _id } = req.session.currentUser;
+	console.log(req.session)
 	const { name, description, price, date, location, phone, email, status, image } = req.body;
 	try{	
 		if (points >= 5) {  
 		const newAd = await Ad.create({
 			name,
-			userId,
+			userId: _id,
 			description, 
 			date, 
 			location, 
