@@ -38,6 +38,7 @@ router.get('/favorites/all', async (req, res, next) => {
 	try {
 		if (currentUser) {
 			const { favorites } = await User.findById( currentUser._id )
+			.populate("favorites")
 			return res.status(200).json(favorites);
 		} else {
 			return res.status(401).json( { error: " No hay usuario en la sesión" });
