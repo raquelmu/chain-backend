@@ -65,6 +65,9 @@ router.get('/:id', async (req, res, next) => {
 router.post('/:id/join', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd, selected } = req.body;
+	console.log(currentUser)
+	console.log(req.body)
+
 	try{ 
 		if (selected === true) {
 		const joinAd = await Ad.findByIdAndUpdate( idAd, { $push: { joined: currentUser._id }  }, { new: true })
@@ -90,8 +93,9 @@ router.post('/:id/unjoin', async (req, res, next) => {
 });
 
 //POST /ads/select  Put user id of joined to selected
-router.post('/select', async (req, res, next) => {
+router.post(':id/select', async (req, res, next) => {
 	const { idAd, idUserJoined } = req.body;
+	console.log(idAd, idUserJoined)
 	try{
 		const selectedUser = await Ad.findByIdAndUpdate( idAd, {selected: idUserJoined, status: "in_progress"}, { new: true })
 		return res.status(200).json(selectedUser)
