@@ -62,7 +62,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //POST /ads/join/add Join an ad
-router.post('/join/add', async (req, res, next) => {
+router.post('/:id/join', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd, selected } = req.body;
 	try{ 
@@ -78,7 +78,7 @@ router.post('/join/add', async (req, res, next) => {
 });
 
 //POST /ads/join/remove Delete join of an ad
-router.post('/join/remove', async (req, res, next) => {
+router.post('/:id/unjoin', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd } = req.body;
 	try{ 
