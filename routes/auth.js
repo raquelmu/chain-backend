@@ -80,7 +80,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //PUT /:id Edit user's info
-router.put('/:id', checkIfLoggedIn, async (req, res, next) => {
+router.put('/:id/update', checkIfLoggedIn, async (req, res, next) => {
 	const { id } = req.params;
 	const { name, profile_image, about, location } = req.body;	
 	try {

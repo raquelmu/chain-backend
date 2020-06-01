@@ -61,9 +61,10 @@ router.post('/:id/add', async (req, res, next) => {
 });
 
 //POST /favorites/remove Delete a favorite
-router.post('/favorites/remove', async (req, res, next) => {
+router.post('/:id/remove', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { adsId } = req.body;
+	console.log(currentUser, req.body)
 		try{
 			const userFav = await User.findByIdAndUpdate( currentUser._id, { $pull: {favorites: adsId} }, {new: true} )
 			return res.status(200).json(userFav)

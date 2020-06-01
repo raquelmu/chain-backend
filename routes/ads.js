@@ -62,7 +62,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //POST /ads/join/add Join an ad
-router.post('/join/add', async (req, res, next) => {
+router.post('/:id/join', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd, selected } = req.body;
 	try{ 
@@ -78,7 +78,7 @@ router.post('/join/add', async (req, res, next) => {
 });
 
 //POST /ads/join/remove Delete join of an ad
-router.post('/join/remove', async (req, res, next) => {
+router.post('/:id/unjoin', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { idAd } = req.body;
 	try{ 
@@ -145,12 +145,14 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 // POST /ads/:id Update ad
-router.put('/:id', async (req, res, next) => {
+router.put('/:id/update', async (req, res, next) => {
 	const { id } = req.params;
-	const {  name, description, date, location, phone, email, image } = req.body;
+	const {  title, description, date, location, phone, email, image } = req.body;
+	console.log(req.body)
+	// if 
 	try {
 		const adUpdated = await Ad.findByIdAndUpdate(id, { 
-			name,
+			title,
 			description, 
 			date, 
 			location, 
