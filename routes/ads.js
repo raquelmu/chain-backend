@@ -145,12 +145,14 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 // POST /ads/:id Update ad
-router.put('/:id', async (req, res, next) => {
+router.put('/:id/update', async (req, res, next) => {
 	const { id } = req.params;
-	const {  name, description, date, location, phone, email, image } = req.body;
+	const {  title, description, date, location, phone, email, image } = req.body;
+	console.log(req.body)
+	// if 
 	try {
 		const adUpdated = await Ad.findByIdAndUpdate(id, { 
-			name,
+			title,
 			description, 
 			date, 
 			location, 
