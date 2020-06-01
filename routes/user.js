@@ -49,7 +49,7 @@ router.get('/favorites/all', async (req, res, next) => {
 });
 
 //POST /favorites/add Save a favorite
-router.post('/favorites/add', async (req, res, next) => {
+router.post('/:id/add', async (req, res, next) => {
 	const { currentUser } = req.session;
 	const { adsId } = req.body;
 	try{ 
