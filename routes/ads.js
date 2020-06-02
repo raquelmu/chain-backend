@@ -62,16 +62,16 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //POST /ads/join/add Join an ad
-router.post('/:id/join', async (req, res, next) => {
+router.post('/join', async (req, res, next) => {
 	const { currentUser } = req.session;
-	const { idAd, selected } = req.body;
+	const { idAd } = req.body;
+	console.log(currentUser)
+	console.log(req.body)
+
 	try{ 
-		if (selected === true) {
 		const joinAd = await Ad.findByIdAndUpdate( idAd, { $push: { joined: currentUser._id }  }, { new: true })
 		return res.status(200).json(joinAd)
-		} else {
-			return res.json({error: "Ya hay alguien seleccionado, no puedes hacer join"})
-		}
+		// return res.json({error: "Ya hay alguien seleccionado, no puedes hacer join"}) Comprobar find selected (vacio o lleno)- retornar
 	} catch(error){
 		next(error)
 	}
@@ -90,8 +90,9 @@ router.post('/:id/unjoin', async (req, res, next) => {
 });
 
 //POST /ads/select  Put user id of joined to selected
-router.post('/select', async (req, res, next) => {
+router.post('/:id/select', async (req, res, next) => {
 	const { idAd, idUserJoined } = req.body;
+	console.log(idAd, idUserJoined)
 	try{
 		const selectedUser = await Ad.findByIdAndUpdate( idAd, {selected: idUserJoined, status: "in_progress"}, { new: true })
 		return res.status(200).json(selectedUser)
@@ -101,7 +102,7 @@ router.post('/select', async (req, res, next) => {
 });
 
 //POST /ads/completed Earn points when the status is "completed" 
-router.post('/completed', async (req, res, next) => {
+router.post('/:id/completed', async (req, res, next) => {
 	const { idAd } = req.body;
 	try{
 		const ad = await Ad.findByIdAndUpdate( idAd, {status: "completed"}, { new: true })

@@ -26,7 +26,7 @@ const adSchema = new Schema({
 		required: true
 	},
 	date: {
-		type: Date,
+		type: String,
 	},
 	location: {
 		type: String,
