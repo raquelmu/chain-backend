@@ -7,7 +7,6 @@ const userSchema = new Schema(
 		username: { type: String, required: true, unique: true },
 		hashedPassword: {type: String, required: true },
 		name:  {type: String},
-		profile_image:  {type: String},
 		about:  {type: String},
 		location:  {type: String},
 		points: { type: Number, default: 10},
