@@ -22,7 +22,7 @@ router.post('/signup', checkUsernameAndPasswordNotEmpty, async (req, res, next) 
 	try {
 		const user = await User.findOne({ username });
 		if (user) {
-			return res.status(422).json({ code: 'username-not-unique' });
+			return res.status(422).json({ code: 'This account already exists' });
 		}
 		const salt = bcrypt.genSaltSync(bcryptSalt);
 		const hashedPassword = bcrypt.hashSync(password, salt);
@@ -41,14 +41,14 @@ router.post('/login', checkUsernameAndPasswordNotEmpty, async (req, res, next) =
 	try {
 		const user = await User.findOne({ username });
 		if (!user) {
-			return res.status(404).json({ code: 'not-found' });
+			return res.status(404).json({ code: 'Username is incorrect' });
 		}
 		if (bcrypt.compareSync(password, user.hashedPassword)) {
 			req.session.currentUser = user;
 			console.log(req.session.currentUser)
 			return res.status(200).json(user);
 		}
-		return res.status(404).json({ code: 'not-found' });
+		return res.status(404).json({ code: 'Password is incorrect' });
 	} catch (error) {
 		next(error);
 	}
