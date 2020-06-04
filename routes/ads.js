@@ -29,7 +29,7 @@ router.post('/new', async (req, res, next) => {
 			title,
 			userId: _id,
 			description, 
-			date, 
+			date: new Date(date), 
 			location, 
 			phone, 
 			email,
