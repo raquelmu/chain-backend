@@ -32,12 +32,15 @@ const userRouter = require('./routes/user')
 
 const app = express();
 
-app.use(
-	cors({
-		credentials: false,
-		"origin": "*",
-	})
-);
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'chain-app-frontend.herokuapp.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+app.use(allowCrossDomain);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
