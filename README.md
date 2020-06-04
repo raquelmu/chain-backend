@@ -16,6 +16,51 @@ It is a collaborative website where you can announce the exchange of objects or 
 
 Being able to facilitate the exchange of favors or services in a time of economic crisis and also encourage solidarity.
 
+## Instructions
+
+**Must be seen with 6/7/8 iPhone format.**
+
+**Login page**
+
+Username field, Password field and button for login. You can’t leave any field empty.
+
+**Register**
+
+In this page, you have to complete the fields to create an account. The fields are Username and Password.
+
+**Homepage**
+
+In the homepage, you have a list of all the ads and a Bottom Menu.
+
+- Bottom Menu:
+    - Home icon: Show all ads ( Linked to Ad page with info)
+    - Search icon: Show all ads and Search bar
+    - + icon: Create and ad
+    - Favorites icon: Show all your favorites (Linked to Ad page with info and delete option)
+    - Profile icon: Show your profile.
+
+**Ad page**
+
+- Image: Is the “image” of the Ad.
+- Info of the Ad: Title, Price (Points by default that would disappear from your account and added in the selected user account), Location, Description, Date, Status, Author (linked to their profile), Phone, Email and Joined user’s (that you must select and complete to pay them for finishing the service).
+- Buttons Edit and Delete / Select and Complete for points transaction if you are the owner and Join and Add favorite for everybody.
+
+**Favourites page**
+
+- List: with Image of the ad, Title of the ad and Remove button.
+
+**Profile**
+
+- Image: Is the “image” of the Profile.
+- Info of the user: Name, About me, Location and Points.
+- Buttons Edit, Logout and Delete if you are the owner.
+
+## Credentials
+
+Username: Gisela / Raquel / Ironhack
+
+Password: 123456
+
 ## Backlog
 
 List of other features outside of the MVPs scope
