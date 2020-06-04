@@ -35,7 +35,7 @@ const app = express();
 app.use(
 	cors({
 		credentials: false,
-		origin: "*",
+		"origin": "*",
 	})
 );
 app.use(logger('dev'));
