@@ -32,8 +32,11 @@ const userRouter = require('./routes/user')
 
 const app = express();
 
-app.use(cors())
-
+app.use(
+	cors({
+		origin: [process.env.FRONTEND_DOMAIN],
+	})
+);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
